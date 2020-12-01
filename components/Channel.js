@@ -26,7 +26,7 @@ export default function Channel(){
         outDuration: 250
       }
     }}
-    value="OPtion 1"
+    value=""
   >
     <option
       disabled

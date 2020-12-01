@@ -30,7 +30,7 @@ export default function Player(){
 
  return(
     <div className="container cyan lighten-4">
-    <h3 class="center-align white-text">Track Name</h3>
+    <h3 className="center-align white-text">Track Name</h3>
     <Slider
         axis="x"
         styles={sliderStyle}

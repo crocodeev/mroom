@@ -1,5 +1,6 @@
 import '../styles/materialize.css'
 
+
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }

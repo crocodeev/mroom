@@ -1,10 +1,9 @@
-import { Select, Button } from 'react-materialize';
+import { Select } from 'react-materialize';
 import 'materialize-css'
 export default function Channel(){
 
    return(
-    <div>
-        <Button>123123</Button>
+    <div className="container container-content-center">
     <Select
     id="Select-9"
     multiple={false}
@@ -26,7 +25,7 @@ export default function Channel(){
         outDuration: 250
       }
     }}
-    value=""
+    value="SOFT"
   >
     <option
       disabled
@@ -35,13 +34,10 @@ export default function Channel(){
       Choose your option
     </option>
     <option value="1">
-      Option 1
+      Soft
     </option>
     <option value="2">
-      Option 2
-    </option>
-    <option value="3">
-      Option 3
+      Hard
     </option>
   </Select>
   </div>

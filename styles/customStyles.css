@@ -1,0 +1,21 @@
+.container-content-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-player {
+    width: 50rem;
+}
+
+html{
+    height: 100%;
+}
+
+body,
+.login-box {
+  height: 100%;
+  display: grid;
+  align-items: center;
+  background-image: url('../public/images/UserBackGround.jpg');
+}

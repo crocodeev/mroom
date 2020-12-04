@@ -1,42 +1,33 @@
-import Slider from 'react-input-slider'
-import { useState } from 'react'
-import { render } from 'react-dom'
-import Pause from '../components/Pause'
-import Play from '../components/Play'
-import Select from '../components/Channel'
+import ToggleButton from '../components/ToggleButton'
+import TrackPosition from '../components/TrackPosition'
 import Channel from '../components/Channel'
+import Sound from '../soundEngine/sound'
 
 export default function Player(){
 
-  const sliderStyle={
-        track: {
-          backgroundColor: '#f5f5f5',
-          width: "90%",
-          height: 5,
-          position: "relative",
-          left: "5%"
-        },
-        active: {
-          backgroundColor: 'white'
-        },
-        thumb: {
-          width: 20,
-          height: 20
-        },
-        disabled: {
-          opacity: 0.5
-        }
-  }  
+  const sound = new Sound
+  
+  function play() {
+      sound.play()
+  }
+
 
  return(
-    <div className="container cyan lighten-4">
-    <h3 className="center-align white-text">Track Name</h3>
-    <Slider
-        axis="x"
-        styles={sliderStyle}
-      />  
-    
-    <Channel></Channel>  
+    <div className="container container-player">
+        <div className="row">
+            <h3 className="center-align white-text">Track Name</h3>
+        </div>
+        <div className="row">
+            <TrackPosition/>
+        </div>
+        <div className="row">
+             <ToggleButton
+                onClick = {play}
+             ></ToggleButton>
+        </div>
+        <div className="row ">
+            <Channel></Channel>   
+        </div>
     </div>
  )
 

@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Play = ({onPlayerClick}) => {
   return (
       <svg className="button" viewBox="0 0 60 60" onClick={onPlayerClick}>

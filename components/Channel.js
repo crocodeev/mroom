@@ -6,11 +6,11 @@ export default function Channel(){
     <div>
         <Button>123123</Button>
     <Select
-    id="Select-9"
+    id="Channel"
     multiple={false}
     onChange={function noRefCheck(){}}
     options={{
-      classes: '',
+      classes: 'white-dropdown-trigger',
       dropdownOptions: {
         alignment: 'left',
         autoTrigger: true,
@@ -23,10 +23,10 @@ export default function Channel(){
         onCloseStart: null,
         onOpenEnd: null,
         onOpenStart: null,
-        outDuration: 250
+        outDuration: 250,
       }
     }}
-    value=""
+    value="Option 1"
   >
     <option
       disabled

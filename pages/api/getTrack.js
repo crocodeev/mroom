@@ -5,7 +5,10 @@ export default function getTrack(req,res){
   
     if(req.method === "POST"){
 
+        console.log(req.body);
+
         const params =  req.body
+        console.log(playlist[params.channel][params.time][params.number])
         const trackPath = playlist[params.channel][params.time][params.number]
 
         const file = fs.createReadStream(trackPath)

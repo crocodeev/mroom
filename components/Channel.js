@@ -4,7 +4,11 @@ export default function Channel(){
 
    return(
     <div className="container container-content-center">
+    <form onChange={(e) => {console.log(e.target)}}>
     <Select
+    onChange={() => 
+      console.log("change")
+    }
     id="Channel"
     multiple={false}
     onChange={function noRefCheck(){}}
@@ -40,6 +44,8 @@ export default function Channel(){
       Hard
     </option>
   </Select>
+  </form> 
   </div>
+  
    )
 }

@@ -1,69 +1,123 @@
+<<<<<<< HEAD
 import {Howl, Howler} from 'howler';
+=======
+import {Howl, Howler} from 'howler'
+import * as musicMetadata from 'music-metadata-browser'
+import * as EventEmmiter from 'events'
+>>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 import next from 'next';
 
-class Sound {
+console.log(EventEmmiter);
+
+class Sound extends EventEmmiter {
 
     constructor() {
+        super()
 
+        let firstSlot = null
+        let secondSlot = null
+      
+        this.channel = 'soft'
         this.index = 0
-        this.firstSlot = null
-        this.secondSlot = null
+        this.slots = [
+            firstSlot,
+            secondSlot
+        ]
+      
 
     }
 
+   async play() {
 
-   play() {
-    
-    //check which slot in next
-        console.log("current index")
-        console.log(this.index)
+    //choose slot to play, start slot is first
+        let currentSlot = this.slots[(this.index%2)]
+        console.log("---current slot---")
+        console.log(currentSlot);
 
-        if(this.index % 2){
-            //check is slot empty
-            if(this.secondSlot){
+        //check is slot empty?
+        if(currentSlot){
+                    console.log("slot is full");
+            currentSlot.on('play', async () => {
+                    this.emit('play', [currentSlot.title, 
+                                       currentSlot.artist])
+                    console.log("start playing...")
+                    console.log(this);
+                    console.log("increase index")
+                    this.index++
+                    console.log("load next slot")
+                    this.slots[(this.index%2)] = await this.loadSlot({
+                        time: "evening",
+                        channel: "soft",
+                        number: this.index
+                    })
+            })
 
-                const track = this.secondSlot
-                track.play()
+            currentSlot.on('end',() => {
+                    console.log("stop")
+                    console.log("clear this slot")
+                    this.slots[!(this.index%2)] = null
+                    console.log("play next");
+                    this.play()
+            })
 
-            }else{
-               
-                const params = {
-                    time: "evening",
-                    channel: "soft",
-                    number: this.index
-                }
-                    
-                this.fetchTrack(params)
-            }
+            currentSlot.play()
+
         }else{
-           
-            if(this.firstSlot){
-                const track = this.firstSlot
-                track.play()
-            }else{
-
-                const params = {
-                    time: "evening",
-                    channel: "soft",
-                    number: this.index
-                }
-                    
-                this.fetchTrack(this.firstSlot, params)
-       
+            console.log("current slot is empty");
+            const options = {
+                time: "evening",
+                channel: this.channel,
+                number: this.index
             }
+            console.log("load slot");
+            currentSlot = await this.loadSlot(options)
+
+            currentSlot.on('play', async () => {
+                                  
+                console.log("start playing...")
+                this.emit('play', [currentSlot.title, 
+                                    currentSlot.artist])
+                console.log(this)
+                console.log("increase index")
+                this.index++
+                console.log("load next slot")
+                this.slots[(this.index%2)] = await this.loadSlot({
+                    time: "evening",
+                    channel: this.channel,
+                    number: this.index
+                })
+
+            })
+
+            currentSlot.on('end',() => {
+
+                    this.slots[!(this.index%2)] = null
+                    this.play()
+
+            })
+    
+
+            currentSlot.play()
+
         }
 
 
     }
 
+<<<<<<< HEAD
     async fetchTrack(currentSlot, nextSlot, params){
+=======
+ 
+
+
+    async loadSlot(options){
+
+>>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 
         const header = new Headers()
         header.append("Content-Type", "application/json")
 
-        const raw = JSON.stringify(params)
-
-        console.log(raw);
+        const raw = JSON.stringify(options)
 
         const requestOptions = {
             method: 'POST',
@@ -72,11 +126,11 @@ class Sound {
             redirect: 'follow'
           }
 
-          let response = await fetch("http://localhost:3000/api/getTrack", requestOptions)
-          let result = await response.blob()
+        let response = await fetch("http://localhost:3000/api/getTrack", requestOptions)
+        let result = await response.blob()
+        let meta = await musicMetadata.parseBlob(result)
 
-          const url = URL.createObjectURL(result)
-
+<<<<<<< HEAD
           const track = currentSlot = new Howl({
               src: url,
               format:["mp3"],
@@ -85,18 +139,45 @@ class Sound {
                 
               },
               onend: () => {
+=======
+        
+        const url = URL.createObjectURL(result)
 
-              }
+        const track = new Howl({
+            src: url,
+            preload: true,
+            format:["mp3"]
+        })
+>>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 
+        track.artist = meta.common.artist
+        track.title = meta.common.title
+
+<<<<<<< HEAD
           })
 
           URL.revokeObjectURL(url)
 
           track.play()
 
-
+=======
+        URL.revokeObjectURL(url)
+        
+        return track
     }
 
+    setChannel(channel){
+        this.channel = channel
+        nextSlot = this.slots[!(this.index%2)]
+>>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
+
+        nextSlot = null
+        nextSlot = this.loadSlot({
+                time: "evening",
+                channel: this.channel,
+                number: this.index
+            })   
+    }
 
 }
 

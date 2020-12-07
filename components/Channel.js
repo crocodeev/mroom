@@ -4,12 +4,16 @@ export default function Channel(){
 
    return(
     <div className="container container-content-center">
+    <form onChange={(e) => {console.log(e.target)}}>
     <Select
-    id="Select-9"
+    onChange={() => 
+      console.log("change")
+    }
+    id="Channel"
     multiple={false}
     onChange={function noRefCheck(){}}
     options={{
-      classes: '',
+      classes: 'white-dropdown-trigger',
       dropdownOptions: {
         alignment: 'left',
         autoTrigger: true,
@@ -22,7 +26,7 @@ export default function Channel(){
         onCloseStart: null,
         onOpenEnd: null,
         onOpenStart: null,
-        outDuration: 250
+        outDuration: 250,
       }
     }}
     value="SOFT"
@@ -40,6 +44,8 @@ export default function Channel(){
       Hard
     </option>
   </Select>
+  </form> 
   </div>
+  
    )
 }

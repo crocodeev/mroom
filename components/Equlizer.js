@@ -8,7 +8,9 @@ export default function Equlizer(props){
 
     const style={
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignItems: "flex-end",
+        height: "100px"
     }
 
 
@@ -18,7 +20,7 @@ export default function Equlizer(props){
         document.getElementById(num))
         for(let i = 0; i < props.frequencyBandArray.length; i++ ){
             let num = props.frequencyBandArray[i]
-            domElements[num].style.height = `${amplitudeValues.current[num]/50}rem`
+            domElements[num].style.height = `${amplitudeValues.current[num]/4}px`
         }
       }
 

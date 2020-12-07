@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import {Howl, Howler} from 'howler';
-=======
 import {Howl, Howler} from 'howler'
 import * as musicMetadata from 'music-metadata-browser'
 import * as EventEmmiter from 'events'
->>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 import next from 'next';
 
 console.log(EventEmmiter);
@@ -104,15 +100,11 @@ class Sound extends EventEmmiter {
 
     }
 
-<<<<<<< HEAD
-    async fetchTrack(currentSlot, nextSlot, params){
-=======
  
 
 
     async loadSlot(options){
 
->>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 
         const header = new Headers()
         header.append("Content-Type", "application/json")
@@ -130,16 +122,6 @@ class Sound extends EventEmmiter {
         let result = await response.blob()
         let meta = await musicMetadata.parseBlob(result)
 
-<<<<<<< HEAD
-          const track = currentSlot = new Howl({
-              src: url,
-              format:["mp3"],
-              onplay: () => {
-                nextSlot = null
-                
-              },
-              onend: () => {
-=======
         
         const url = URL.createObjectURL(result)
 
@@ -148,19 +130,10 @@ class Sound extends EventEmmiter {
             preload: true,
             format:["mp3"]
         })
->>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 
         track.artist = meta.common.artist
         track.title = meta.common.title
 
-<<<<<<< HEAD
-          })
-
-          URL.revokeObjectURL(url)
-
-          track.play()
-
-=======
         URL.revokeObjectURL(url)
         
         return track
@@ -169,7 +142,6 @@ class Sound extends EventEmmiter {
     setChannel(channel){
         this.channel = channel
         nextSlot = this.slots[!(this.index%2)]
->>>>>>> 6b2a0e84040b4b07b064c3d4e8e98e1dd283bfdd
 
         nextSlot = null
         nextSlot = this.loadSlot({

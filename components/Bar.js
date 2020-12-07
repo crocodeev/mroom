@@ -8,7 +8,7 @@ export default function Bar(props){
              >
             <style jsx>{`
         .equlizer_line {
-            height: .2rem;
+            height: 0px;
             width: .8rem;
             margin-right: .1rem;
             margin-left: .1rem;

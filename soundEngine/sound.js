@@ -1,4 +1,5 @@
 import {Howl, Howler} from 'howler';
+import next from 'next';
 
 class Sound {
 
@@ -55,7 +56,7 @@ class Sound {
 
     }
 
-    async fetchTrack(slot, params){
+    async fetchTrack(currentSlot, nextSlot, params){
 
         const header = new Headers()
         header.append("Content-Type", "application/json")
@@ -76,11 +77,12 @@ class Sound {
 
           const url = URL.createObjectURL(result)
 
-          const track = slot = new Howl({
+          const track = currentSlot = new Howl({
               src: url,
               format:["mp3"],
               onplay: () => {
-
+                nextSlot = null
+                
               },
               onend: () => {
 
@@ -88,9 +90,10 @@ class Sound {
 
           })
 
+          URL.revokeObjectURL(url)
+
           track.play()
 
-          URL.revokeObjectURL(url)
 
     }
 

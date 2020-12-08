@@ -1,28 +1,64 @@
 import ToggleButton from '../components/ToggleButton'
 import TrackPosition from '../components/TrackPosition'
+import Caption from '../components/Caption'
 import Channel from '../components/Channel'
 import Sound from '../soundEngine/sound'
 import Equlizer from '../components/Equlizer'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Howler } from 'howler'
 
 export default function Player(){
 
+function changePicture(channel){
+    
+    const header = new Headers()
+        header.append("Content-Type", "application/json")
 
-const [title, setTitle] = useState("Title")  
-const [artist, setArtist] = useState("Artist")
+        const raw = JSON.stringify({
+            channel: channel
+        })
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header,
+            body: raw,
+            redirect: 'follow'
+          }
+
+    fetch("http://localhost:3000/api/getPicture", requestOptions)
+    .then(data => data.blob())
+    .then(blob => {
+        const url = URL.createObjectURL(blob)
+        document.getElementsByTagName("body")[0].style.backgroundImage = `url(${url})`
+        document.getElementsByTagName("body")[0].style.backgroundSize = "cover"
+        return url
+    })
+    .then(url => URL.revokeObjectURL(url))
+    .catch(err => console.log(err))
+}    
+
+useEffect(() => {
+
+    changePicture("hard")
+
+},[])    
+
+
 //count of EQ bars
 const [frequencyBandArray, setFrequencyBandArray] = useState([...Array(25).keys()])
-
-
 const [analyser, setAnalyser] = useState(null)
+
+const title = useRef("Title")
+const artist = useRef("Artist")
 
 
 
   const sound = new Sound()
+  console.log(sound)
   sound.on('play', (metaData) => {
-      setTitle(metaData[0])
-      setArtist(metaData[1])
+      title.current = metaData[0]
+      console.log(title.current)
+      artist.current = metaData[1]
     })
 
 
@@ -47,18 +83,17 @@ const [analyser, setAnalyser] = useState(null)
   }
 
 
-  function setChannel (){
-      console.log(click)
+  function setChannel (event){
+      let value = event.target.value
+      changePicture(value)
+      sound.setChannel(value)
   }
 
 
  return(
     <div className="container container-player">
-        <div className="row">
-            <h4 className="center-align white-text">{artist}</h4>
-        </div><div className="row">
-            <h4 className="center-align white-text">{title}</h4>
-        </div>
+        <Caption texts={title.current}/>
+        <Caption texts={artist.current}/>
         <div className="row">
             { analyser ?
             <Equlizer
@@ -75,7 +110,8 @@ const [analyser, setAnalyser] = useState(null)
              ></ToggleButton>
         </div>
         <div className="row ">
-            <Channel>
+            <Channel
+            onChange={setChannel}>
             </Channel>   
         </div>
     </div>

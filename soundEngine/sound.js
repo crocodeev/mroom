@@ -13,7 +13,7 @@ class Sound extends EventEmmiter {
         let firstSlot = null
         let secondSlot = null
       
-        this.channel = 'soft'
+        this.channel = 'hard'
         this.index = 0
         this.slots = [
             firstSlot,
@@ -43,7 +43,7 @@ class Sound extends EventEmmiter {
                     console.log("load next slot")
                     this.slots[(this.index%2)] = await this.loadSlot({
                         time: "evening",
-                        channel: "soft",
+                        channel: this.channel,
                         number: this.index
                     })
             })
@@ -140,15 +140,18 @@ class Sound extends EventEmmiter {
     }
 
     setChannel(channel){
-        this.channel = channel
-        nextSlot = this.slots[!(this.index%2)]
 
-        nextSlot = null
-        nextSlot = this.loadSlot({
+        this.channel = channel
+        console.log(this)
+
+       /* this.slots[!(this.index%2)] = null
+        this.slots[!(this.index%2)] = this.loadSlot({
                 time: "evening",
                 channel: this.channel,
                 number: this.index
-            })   
+            })
+        
+        console.log(this);*/
     }
 
 }

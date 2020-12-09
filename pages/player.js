@@ -7,6 +7,8 @@ import Equlizer from '../components/Equlizer'
 import { useState, useRef, useEffect } from 'react'
 import { Howler } from 'howler'
 
+const sound = new Sound()
+
 export default function Player(){
 
 function changePicture(channel){
@@ -43,23 +45,24 @@ useEffect(() => {
 
 },[])    
 
+useEffect(() => {
+    console.log("render")
+})
+
 
 //count of EQ bars
 const [frequencyBandArray, setFrequencyBandArray] = useState([...Array(25).keys()])
 const [analyser, setAnalyser] = useState(null)
 
-const title = useRef("Title")
-const artist = useRef("Artist")
+const [title, setTitle] = useState("Title")
+const [artist, setArtist] = useState("Artist")
 
 
-
-  const sound = new Sound()
-  console.log(sound)
   sound.on('play', (metaData) => {
-      title.current = metaData[0]
-      console.log(title.current)
-      artist.current = metaData[1]
+      setTitle(metaData[0])
+      setArtist(metaData[1])
     })
+
 
 
   async function play() {
@@ -84,6 +87,7 @@ const artist = useRef("Artist")
 
 
   function setChannel (event){
+      console.log("Setting channel");
       let value = event.target.value
       changePicture(value)
       sound.setChannel(value)
@@ -92,8 +96,8 @@ const artist = useRef("Artist")
 
  return(
     <div className="container container-player">
-        <Caption texts={title.current}/>
-        <Caption texts={artist.current}/>
+        <Caption texts={artist}/>
+        <Caption texts={title}/>
         <div className="row">
             { analyser ?
             <Equlizer

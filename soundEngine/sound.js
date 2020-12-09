@@ -12,7 +12,7 @@ class Sound extends EventEmmiter {
 
         let firstSlot = null
         let secondSlot = null
-      
+        
         this.channel = 'hard'
         this.index = 0
         this.slots = [
@@ -153,6 +153,7 @@ class Sound extends EventEmmiter {
         
         console.log(this);*/
     }
+
 
 }
 

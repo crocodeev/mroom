@@ -1,9 +1,7 @@
 import {Howl, Howler} from 'howler'
 import * as musicMetadata from 'music-metadata-browser'
 import * as EventEmmiter from 'events'
-import next from 'next';
-
-console.log(EventEmmiter);
+import next from 'next'
 
 class Sound extends EventEmmiter {
 
@@ -13,7 +11,7 @@ class Sound extends EventEmmiter {
         let firstSlot = null
         let secondSlot = null
         
-        this.channel = 'hard'
+        this.channel = ''
         this.index = 0
         this.slots = [
             firstSlot,
@@ -139,19 +137,21 @@ class Sound extends EventEmmiter {
         return track
     }
 
-    setChannel(channel){
+    async setChannel(channel){
 
         this.channel = channel
-        console.log(this)
-
-       /* this.slots[!(this.index%2)] = null
-        this.slots[!(this.index%2)] = this.loadSlot({
+       
+        console.log(+this.index%2)
+        console.log(this.slots)
+        console.log(this.slots[+this.index%2])
+        this.slots[+this.index%2] = null
+        this.slots[+this.index%2] = await this.loadSlot({
                 time: "evening",
                 channel: this.channel,
                 number: this.index
             })
         
-        console.log(this);*/
+        console.log(this)
     }
 
 

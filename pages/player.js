@@ -8,6 +8,8 @@ import { useState, useRef, useEffect } from 'react'
 import { Howler } from 'howler'
 
 const sound = new Sound()
+window.sound = sound
+
 
 export default function Player(){
 
@@ -40,9 +42,12 @@ function changePicture(channel){
 }    
 
 useEffect(() => {
-
     changePicture("hard")
-
+    sound.channel = "hard"
+    sound.on('play', (metaData) => {
+        setTitle(metaData[0])
+        setArtist(metaData[1])
+      })
 },[])    
 
 useEffect(() => {
@@ -56,13 +61,6 @@ const [analyser, setAnalyser] = useState(null)
 
 const [title, setTitle] = useState("Title")
 const [artist, setArtist] = useState("Artist")
-
-
-  sound.on('play', (metaData) => {
-      setTitle(metaData[0])
-      setArtist(metaData[1])
-    })
-
 
 
   async function play() {

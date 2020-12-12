@@ -41,8 +41,33 @@ export default function Channel(props){
       Hard
     </option>
   </Select>
-  </form> 
+  </form>
+  <style jsx global>
+      {
+      `
+      
+      .select-wrapper .caret{
+        fill: white;
+      }
+
+      .select-wrapper input.select-dropdown{
+        border-bottom: 2px solid #ffffff;
+      }
+
+      .select-wrapper input.select-dropdown:focus{
+        border-bottom: 2px solid #ffffff;
+      }
+
+
+
+      `
+      }
+    </style> 
   </div>
   
    )
 }
+
+/*
+ 
+*/

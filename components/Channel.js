@@ -52,13 +52,21 @@ export default function Channel(props){
 
       .select-wrapper input.select-dropdown{
         border-bottom: 2px solid #ffffff;
+        color: #ffffff;
+        font-size: 18px;
       }
 
       .select-wrapper input.select-dropdown:focus{
         border-bottom: 2px solid #ffffff;
       }
 
+      .select-wrapper input.select-dropdown:focus{
+        border-bottom: 2px solid #ffffff;
+      }
 
+      .dropdown-content li > a, .dropdown-content li > span{
+        color: grey;
+      }
 
       `
       }

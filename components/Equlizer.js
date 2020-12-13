@@ -10,7 +10,8 @@ export default function Equlizer(props){
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
-        height: "100px"
+        height: "100px",
+        marginBottom: "20px"
     }
 
 

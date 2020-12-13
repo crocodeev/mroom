@@ -1,9 +1,10 @@
 import ToggleButton from '../components/ToggleButton'
-import TrackPosition from '../components/TrackPosition'
+import TrackPosition from '../components/VolumeControl'
 import Caption from '../components/Caption'
 import Channel from '../components/Channel'
 import Sound from '../soundEngine/sound'
 import Equlizer from '../components/Equlizer'
+import VolumeControl from '../components/VolumeControl'
 import { useState, useRef, useEffect } from 'react'
 import { Howler } from 'howler'
 
@@ -50,32 +51,37 @@ useEffect(() => {
       })
 },[])    
 
-useEffect(() => {
-    console.log("render")
-})
-
 
 //count of EQ bars
 const [frequencyBandArray, setFrequencyBandArray] = useState([...Array(25).keys()])
 const [analyser, setAnalyser] = useState(null)
-
+//metadata
 const [title, setTitle] = useState("Title")
 const [artist, setArtist] = useState("Artist")
+//first play or not
+const isStarted = useRef(false)
 
 
   async function play() {
-      await sound.play()
+      if(isStarted.current){
+
+        sound.togglePausePlay()
+
+      }else{
+        await sound.play()
      
-      const analyser = Howler.ctx.createAnalyser()
-      Howler.masterGain.connect(analyser)
-      analyser.connect(Howler.ctx.destination)
-      analyser.fftSize = 64
-      
-      setAnalyser(analyser)
-    
+        const analyser = Howler.ctx.createAnalyser()
+        Howler.masterGain.connect(analyser)
+        analyser.connect(Howler.ctx.destination)
+        analyser.fftSize = 64
+        setAnalyser(analyser)
+
+        isStarted.current = true
+
+      }
   }
 
-
+//eq works
   function getFrequencyData (spectrumSetter){
     const bufferLength = analyser.frequencyBinCount
     const dataArray = new Uint8Array(bufferLength)
@@ -83,7 +89,7 @@ const [artist, setArtist] = useState("Artist")
     spectrumSetter(dataArray)
   }
 
-
+//change channel
   function setChannel (event){
       console.log("Setting channel");
       let value = event.target.value
@@ -105,6 +111,9 @@ const [artist, setArtist] = useState("Artist")
             />
             :null
             }
+        </div>
+        <div className="row">
+            <VolumeControl />
         </div>
         <div className="row">
              <ToggleButton

@@ -11,6 +11,7 @@ class Sound extends EventEmmiter {
         let firstSlot = null
         let secondSlot = null
         
+        this.currentSlot = null
         this.channel = ''
         this.index = 0
         this.slots = [
@@ -24,7 +25,7 @@ class Sound extends EventEmmiter {
    async play() {
 
     //choose slot to play, start slot is first
-        let currentSlot = this.slots[(this.index%2)]
+        let currentSlot = this.currentSlot = this.slots[(this.index%2)]
         console.log("---current slot---")
         console.log(currentSlot);
 
@@ -32,6 +33,7 @@ class Sound extends EventEmmiter {
         if(currentSlot){
                     console.log("slot is full");
             currentSlot.on('play', async () => {
+                  
                     this.emit('play', [currentSlot.title, 
                                        currentSlot.artist])
                     console.log("start playing...")
@@ -47,6 +49,7 @@ class Sound extends EventEmmiter {
             })
 
             currentSlot.on('end',() => {
+              
                     console.log("stop")
                     console.log("clear this slot")
                     this.slots[!(this.index%2)] = null
@@ -64,10 +67,11 @@ class Sound extends EventEmmiter {
                 number: this.index
             }
             console.log("load slot");
-            currentSlot = await this.loadSlot(options)
+            //??
+            currentSlot = this.currentSlot = this.slots[(this.index%2)] = await this.loadSlot(options)
 
             currentSlot.on('play', async () => {
-                                  
+                
                 console.log("start playing...")
                 this.emit('play', [currentSlot.title, 
                                     currentSlot.artist])
@@ -84,7 +88,7 @@ class Sound extends EventEmmiter {
             })
 
             currentSlot.on('end',() => {
-
+                    
                     this.slots[!(this.index%2)] = null
                     this.play()
 
@@ -92,6 +96,7 @@ class Sound extends EventEmmiter {
     
 
             currentSlot.play()
+
 
         }
 
@@ -152,6 +157,17 @@ class Sound extends EventEmmiter {
             })
         
         console.log(this)
+    }
+
+    togglePausePlay(){
+        console.log("toggle")
+        console.log(this.currentSlot)
+        console.log(this.currentSlot.playing())
+        if(this.currentSlot.playing()){
+            this.currentSlot.pause() 
+        }else{
+            this.currentSlot.play() 
+        }
     }
 
 

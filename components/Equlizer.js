@@ -1,6 +1,6 @@
-import { Divider } from 'react-materialize'
 import { useRef, useEffect } from 'react'
 import Bar from './Bar'
+
 
 export default function Equlizer(props){
 

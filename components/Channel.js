@@ -75,7 +75,3 @@ export default function Channel(props){
   
    )
 }
-
-/*
- 
-*/

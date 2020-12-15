@@ -6,7 +6,7 @@ export default function getPicture(req,res){
 
         const params =  req.body
     
-        const trackPath = 'C:\\Atom\\mroom\\public\\images\\' + params.channel + '.jpg'
+        const trackPath = 'G:\\Atom\\mediaroom\\public\\images\\' + params.channel + '.jpg'
 
         const file = fs.createReadStream(trackPath)
 
